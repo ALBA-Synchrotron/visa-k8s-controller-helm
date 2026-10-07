@@ -1,0 +1,24 @@
+apiVersion: v1
+entries:
+  visa-k8s-controller:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2026-10-07T11:56:23.639138958+02:00"
+    description: A Helm chart for deploying VISA's kubernetes cloud provider controller
+    digest: 071b4ab6611371f15a6402ebec927cf274f195bbb369163740914f306d21b24c
+    home: https://github.com/ALBA-Synchrotron/visa-k8s-controller-helm
+    icon: https://alba-synchrotron.github.io/visa-k8s-controller-helm/visa-k8s.png
+    keywords:
+    - visa
+    - daas
+    - open-data
+    maintainers:
+    - name: Rodrigo Cabezas Quirós (MIS section @ ALBA Synchrotron)
+    name: visa-k8s-controller
+    sources:
+    - https://github.com/ALBA-Synchrotron/visa-k8s-controller
+    type: application
+    urls:
+    - visa-k8s-controller-1.0.0.tgz
+    version: 1.0.0
+generated: "2026-10-07T11:56:23.636746382+02:00"
