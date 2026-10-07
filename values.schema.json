@@ -1,0 +1,321 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Values",
+  "type": "object",
+  "properties": {
+    "replicaCount": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of controller replicas to deploy."
+    },
+    "image": {
+      "type": "object",
+      "description": "Controller container image configuration.",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "description": "Container image repository."
+        },
+        "pullPolicy": {
+          "type": "string",
+          "enum": ["Always", "IfNotPresent", "Never"],
+          "description": "Container image pull policy."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Container image tag."
+        }
+      },
+      "additionalProperties": false
+    },
+    "imagePullSecrets": {
+      "type": "array",
+      "description": "Image pull secrets for the controller manager pod.",
+      "items": {
+        "type": "object"
+      }
+    },
+    "nameOverride": {
+      "type": "string",
+      "description": "Override the chart name used in resource names."
+    },
+    "fullnameOverride": {
+      "type": "string",
+      "description": "Override the fully qualified release name."
+    },
+    "serviceAccount": {
+      "type": "object",
+      "description": "ServiceAccount configuration.",
+      "properties": {
+        "create": {
+          "type": "boolean",
+          "description": "Specifies whether a service account should be created."
+        },
+        "automount": {
+          "type": "boolean",
+          "description": "Automatically mount a ServiceAccount's API credentials."
+        },
+        "annotations": {
+          "type": "object",
+          "description": "Annotations to add to the service account."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the service account to use. If not set and create is true, a name is generated using the fullname template."
+        }
+      },
+      "additionalProperties": false
+    },
+    "rbac": {
+      "type": "object",
+      "description": "RBAC configuration.",
+      "properties": {
+        "create": {
+          "type": "boolean",
+          "description": "Specifies whether RBAC resources should be created."
+        },
+        "createAdminRoles": {
+          "type": "boolean",
+          "description": "Specifies whether cluster-admin helper roles for VISA CRDs should be created."
+        }
+      },
+      "additionalProperties": false
+    },
+    "operatorScopeNamespace": {
+      "type": "string",
+      "description": "Limits the operator watch to specific namespace(s) (comma-separated). If empty, the controller watches all namespaces across the cluster."
+    },
+    "managedImagePullSecrets": {
+      "type": "string",
+      "description": "Comma-separated list of image pull secret names to pass to VISA instances managed by the controller."
+    },
+    "leaderElection": {
+      "type": "object",
+      "description": "Leader election configuration.",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Leader election ensures only one active controller manager runs at a time in HA setups."
+        }
+      },
+      "additionalProperties": false
+    },
+    "healthProbes": {
+      "type": "object",
+      "description": "Health probe configuration (healthz and readyz).",
+      "properties": {
+        "bindAddress": {
+          "type": "string",
+          "description": "Bind address for health probe endpoints."
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535,
+          "description": "Port number for health probe endpoints."
+        }
+      },
+      "additionalProperties": false
+    },
+    "metrics": {
+      "type": "object",
+      "description": "Controller metrics endpoint configuration.",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable Prometheus metrics endpoint."
+        },
+        "bindAddress": {
+          "type": "string",
+          "description": "Bind address for the metrics endpoint. Set to '0' to disable."
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535,
+          "description": "Port number for the metrics endpoint."
+        },
+        "secure": {
+          "type": "boolean",
+          "description": "If true, the metrics endpoint is served securely via HTTPS with authn/authz filter."
+        },
+        "certPath": {
+          "type": "string",
+          "description": "Path to certificates for securing metrics (optional)."
+        },
+        "certName": {
+          "type": "string",
+          "description": "Certificate file name for metrics TLS."
+        },
+        "certKey": {
+          "type": "string",
+          "description": "Certificate key file name for metrics TLS."
+        }
+      },
+      "additionalProperties": false
+    },
+    "webhook": {
+      "type": "object",
+      "description": "Webhook server certificate configuration (optional).",
+      "properties": {
+        "certPath": {
+          "type": "string",
+          "description": "Path to certificates for webhook server (optional)."
+        },
+        "certName": {
+          "type": "string",
+          "description": "Certificate file name for webhook TLS."
+        },
+        "certKey": {
+          "type": "string",
+          "description": "Certificate key file name for webhook TLS."
+        }
+      },
+      "additionalProperties": false
+    },
+    "enableHttp2": {
+      "type": "boolean",
+      "description": "Enable HTTP/2 for metrics and webhook servers (disabled by default due to CVE vulnerabilities)."
+    },
+    "extraArgs": {
+      "type": "array",
+      "description": "Additional command-line arguments to pass to the controller binary.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "env": {
+      "type": "array",
+      "description": "Additional environment variables to pass to the controller container.",
+      "items": {
+        "type": "object"
+      }
+    },
+    "envFrom": {
+      "type": "array",
+      "description": "Additional environment variables from configmaps/secrets.",
+      "items": {
+        "type": "object"
+      }
+    },
+    "podAnnotations": {
+      "type": "object",
+      "description": "Pod annotations."
+    },
+    "podLabels": {
+      "type": "object",
+      "description": "Pod labels."
+    },
+    "podSecurityContext": {
+      "type": "object",
+      "description": "Pod Security Context."
+    },
+    "securityContext": {
+      "type": "object",
+      "description": "Container Security Context."
+    },
+    "service": {
+      "type": "object",
+      "description": "Controller Service configuration.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["ClusterIP", "NodePort", "LoadBalancer", "ExternalName"],
+          "description": "Kubernetes Service type."
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535,
+          "description": "Metrics service port."
+        },
+        "targetPort": {
+          "type": ["integer", "string"],
+          "description": "Target port for the metrics service."
+        },
+        "healthPort": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535,
+          "description": "Health probe service port."
+        },
+        "annotations": {
+          "type": "object",
+          "description": "Annotations to add to the service."
+        }
+      },
+      "additionalProperties": false
+    },
+    "resources": {
+      "type": "object",
+      "description": "Resource requests and limits for the controller container.",
+      "properties": {
+        "limits": {
+          "type": "object",
+          "description": "Resource limits (cpu, memory, etc.)."
+        },
+        "requests": {
+          "type": "object",
+          "description": "Resource requests (cpu, memory, etc.)."
+        }
+      },
+      "additionalProperties": false
+    },
+    "livenessProbe": {
+      "type": "object",
+      "description": "Liveness probe configuration."
+    },
+    "readinessProbe": {
+      "type": "object",
+      "description": "Readiness probe configuration."
+    },
+    "podDisruptionBudget": {
+      "type": "object",
+      "description": "Pod Disruption Budget configuration.",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Specifies whether a PodDisruptionBudget should be created."
+        },
+        "minAvailable": {
+          "type": ["integer", "string"],
+          "description": "Minimum number/percentage of pods that must still be available after eviction."
+        },
+        "maxUnavailable": {
+          "type": ["integer", "string"],
+          "description": "Maximum number/percentage of pods that can be unavailable after eviction."
+        }
+      },
+      "additionalProperties": false
+    },
+    "volumes": {
+      "type": "array",
+      "description": "Additional volumes to attach to the pod.",
+      "items": {
+        "type": "object"
+      }
+    },
+    "volumeMounts": {
+      "type": "array",
+      "description": "Additional volume mounts for the controller container.",
+      "items": {
+        "type": "object"
+      }
+    },
+    "nodeSelector": {
+      "type": "object",
+      "description": "Node scheduling options."
+    },
+    "tolerations": {
+      "type": "array",
+      "description": "Node scheduling tolerations.",
+      "items": {
+        "type": "object"
+      }
+    },
+    "affinity": {
+      "type": "object",
+      "description": "Node scheduling affinity rules."
+    }
+  }
+}
