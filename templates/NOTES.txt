@@ -1,0 +1,23 @@
+VISA Kubernetes Controller has been deployed successfully.
+
+Release:   {{ .Release.Name }}
+Namespace: {{ .Release.Namespace }}
+
+1. Check the controller pod status:
+   kubectl get pods -n {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "visa-k8s-controller.name" . }},app.kubernetes.io/instance={{ .Release.Name }}"
+
+2. View controller manager logs:
+   kubectl logs -n {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "visa-k8s-controller.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -c manager -f
+
+3. Verify VISA CRDs:
+   kubectl get crds | grep 'visa.k8s'
+
+{{- if .Values.metrics.enabled }}
+4. Access controller metrics:
+   kubectl port-forward -n {{ .Release.Namespace }} svc/{{ include "visa-k8s-controller.fullname" . }} {{ .Values.service.port }}:{{ .Values.service.port }}
+   {{- if .Values.metrics.secure }}
+   curl -k https://127.0.0.1:{{ .Values.service.port }}/metrics -H "Authorization: Bearer $(kubectl create token {{ include "visa-k8s-controller.serviceAccountName" . }} -n {{ .Release.Namespace }})"
+   {{- else }}
+   curl http://127.0.0.1:{{ .Values.service.port }}/metrics
+   {{- end }}
+{{- end }}

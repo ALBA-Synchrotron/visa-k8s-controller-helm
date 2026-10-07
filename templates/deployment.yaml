@@ -1,0 +1,131 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "visa-k8s-controller.fullname" . }}
+  labels:
+    {{- include "visa-k8s-controller.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "visa-k8s-controller.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: manager
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "visa-k8s-controller.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "visa-k8s-controller.serviceAccountName" . }}
+      automountServiceAccountToken: {{ .Values.serviceAccount.automount }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: manager
+          command:
+            - /manager
+          args:
+            {{- if .Values.leaderElection.enabled }}
+            - --leader-elect
+            {{- end }}
+            - --health-probe-bind-address={{ .Values.healthProbes.bindAddress | default ":8081" }}
+            {{- if .Values.metrics.enabled }}
+            - --metrics-bind-address={{ .Values.metrics.bindAddress | default ":8443" }}
+            - --metrics-secure={{ .Values.metrics.secure }}
+            {{- if .Values.metrics.certPath }}
+            - --metrics-cert-path={{ .Values.metrics.certPath }}
+            - --metrics-cert-name={{ .Values.metrics.certName | default "tls.crt" }}
+            - --metrics-cert-key={{ .Values.metrics.certKey | default "tls.key" }}
+            {{- end }}
+            {{- else }}
+            - --metrics-bind-address=0
+            {{- end }}
+            {{- if .Values.webhook.certPath }}
+            - --webhook-cert-path={{ .Values.webhook.certPath }}
+            - --webhook-cert-name={{ .Values.webhook.certName | default "tls.crt" }}
+            - --webhook-cert-key={{ .Values.webhook.certKey | default "tls.key" }}
+            {{- end }}
+            {{- if .Values.enableHttp2 }}
+            - --enable-http2
+            {{- end }}
+            {{- with .Values.extraArgs }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          {{- if or .Values.operatorScopeNamespace .Values.managedImagePullSecrets .Values.env }}
+          env:
+            {{- if .Values.operatorScopeNamespace }}
+            - name: OPERATOR_SCOPE_NAMESPACE
+              value: {{ .Values.operatorScopeNamespace | quote }}
+            {{- end }}
+            {{- if .Values.managedImagePullSecrets }}
+            - name: IMAGE_PULL_SECRETS
+              value: {{ .Values.managedImagePullSecrets | quote }}
+            {{- end }}
+            {{- with .Values.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          {{- end }}
+          {{- with .Values.envFrom }}
+          envFrom:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: health
+              containerPort: {{ .Values.healthProbes.port | default 8081 }}
+              protocol: TCP
+            {{- if .Values.metrics.enabled }}
+            - name: metrics
+              containerPort: {{ .Values.metrics.port | default 8443 }}
+              protocol: TCP
+            {{- end }}
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
