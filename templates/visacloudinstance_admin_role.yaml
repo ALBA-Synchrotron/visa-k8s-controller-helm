@@ -1,4 +1,3 @@
-{{- if and .Values.rbac.create .Values.rbac.createAdminRoles -}}
 # This rule is not used by the project visa-k8s-controller itself.
 # It is provided to allow the cluster admin to help manage permissions for users.
 #
@@ -9,20 +8,19 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ include "visa-k8s-controller.fullname" . }}-visasidecarconfig-admin-role
   labels:
-    {{- include "visa-k8s-controller.labels" . | nindent 4 }}
+      {{- include "visa-k8s-controller.labels" . | nindent 4 }}
+  name: {{ include "visa-k8s-controller.fullname" . }}-visacloudinstance-admin-role
 rules:
 - apiGroups:
   - cloudprovider.visa.k8s
   resources:
-  - visasidecarconfigs
+  - visacloudinstances
   verbs:
   - '*'
 - apiGroups:
   - cloudprovider.visa.k8s
   resources:
-  - visasidecarconfigs/status
+  - visacloudinstances/status
   verbs:
   - get
-{{- end }}
