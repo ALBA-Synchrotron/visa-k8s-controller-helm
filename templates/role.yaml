@@ -59,7 +59,7 @@ rules:
 - apiGroups:
   - cloudprovider.visa.k8s
   resources:
-  - visainstances/status
+  - visacloudinstances/status
   verbs:
   - get
   - patch
