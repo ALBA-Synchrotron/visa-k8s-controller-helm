@@ -33,7 +33,7 @@ rules:
   - visacloudflavours
   - visacloudimages
   - visacloudsecuritygroups
-  - visasidecarconfigs
+  - visacloudsidecarconfigs
   verbs:
   - get
   - list
@@ -41,7 +41,7 @@ rules:
 - apiGroups:
   - cloudprovider.visa.k8s
   resources:
-  - visainstances
+  - visacloudinstances
   verbs:
   - create
   - delete
@@ -53,7 +53,7 @@ rules:
 - apiGroups:
   - cloudprovider.visa.k8s
   resources:
-  - visainstances/finalizers
+  - visacloudinstances/finalizers
   verbs:
   - update
 - apiGroups:
