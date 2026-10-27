@@ -1,0 +1,104 @@
+apiVersion: v1
+entries:
+  visa-k8s-controller:
+  - apiVersion: v2
+    appVersion: 1.0.4
+    created: "2026-10-27T08:54:12.575041298Z"
+    description: A Helm chart for deploying VISA's kubernetes cloud provider controller
+    digest: 7da0cae96a967f37b2deb3a061bff233dbf38746f485160758cf4883d5dd78a1
+    home: https://github.com/ALBA-Synchrotron/visa-k8s-controller-helm
+    icon: https://alba-synchrotron.github.io/visa-k8s-controller-helm/visa-k8s.png
+    keywords:
+    - visa
+    - daas
+    - open-data
+    maintainers:
+    - name: Rodrigo Cabezas Quirós (MIS section @ ALBA Synchrotron)
+    name: visa-k8s-controller
+    sources:
+    - https://github.com/ALBA-Synchrotron/visa-k8s-controller
+    type: application
+    urls:
+    - https://alba-synchrotron.github.io/visa-k8s-controller-helm/visa-k8s-controller-1.0.4.tgz
+    version: 1.0.4
+  - apiVersion: v2
+    appVersion: 1.0.3
+    created: "2026-10-27T08:54:12.565827615Z"
+    description: A Helm chart for deploying VISA's kubernetes cloud provider controller
+    digest: 5848a3b077176eac3abf6d01f57f7a43645cc574f35265d13c74765e87a4eafa
+    home: https://github.com/ALBA-Synchrotron/visa-k8s-controller-helm
+    icon: https://alba-synchrotron.github.io/visa-k8s-controller-helm/visa-k8s.png
+    keywords:
+    - visa
+    - daas
+    - open-data
+    maintainers:
+    - name: Rodrigo Cabezas Quirós (MIS section @ ALBA Synchrotron)
+    name: visa-k8s-controller
+    sources:
+    - https://github.com/ALBA-Synchrotron/visa-k8s-controller
+    type: application
+    urls:
+    - https://alba-synchrotron.github.io/visa-k8s-controller-helm/visa-k8s-controller-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v2
+    appVersion: 1.0.2
+    created: "2026-10-27T08:54:12.563275686Z"
+    description: A Helm chart for deploying VISA's kubernetes cloud provider controller
+    digest: 4eac64f03cd46cdbc1a06a9afaaa0d3a6384e5a8cfcd6c7a7860ced76820ead8
+    home: https://github.com/ALBA-Synchrotron/visa-k8s-controller-helm
+    icon: https://alba-synchrotron.github.io/visa-k8s-controller-helm/visa-k8s.png
+    keywords:
+    - visa
+    - daas
+    - open-data
+    maintainers:
+    - name: Rodrigo Cabezas Quirós (MIS section @ ALBA Synchrotron)
+    name: visa-k8s-controller
+    sources:
+    - https://github.com/ALBA-Synchrotron/visa-k8s-controller
+    type: application
+    urls:
+    - https://alba-synchrotron.github.io/visa-k8s-controller-helm/visa-k8s-controller-1.0.2.tgz
+    version: 1.0.2
+  - apiVersion: v2
+    appVersion: 1.0.1
+    created: "2026-10-27T08:54:12.560185262Z"
+    description: A Helm chart for deploying VISA's kubernetes cloud provider controller
+    digest: cdb9df99b4fff1660412cecc4ef18c3ef81b79c9622da84941e9eaf999ba1968
+    home: https://github.com/ALBA-Synchrotron/visa-k8s-controller-helm
+    icon: https://alba-synchrotron.github.io/visa-k8s-controller-helm/visa-k8s.png
+    keywords:
+    - visa
+    - daas
+    - open-data
+    maintainers:
+    - name: Rodrigo Cabezas Quirós (MIS section @ ALBA Synchrotron)
+    name: visa-k8s-controller
+    sources:
+    - https://github.com/ALBA-Synchrotron/visa-k8s-controller
+    type: application
+    urls:
+    - https://alba-synchrotron.github.io/visa-k8s-controller-helm/visa-k8s-controller-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2026-10-27T08:54:12.557751498Z"
+    description: A Helm chart for deploying VISA's kubernetes cloud provider controller
+    digest: 071b4ab6611371f15a6402ebec927cf274f195bbb369163740914f306d21b24c
+    home: https://github.com/ALBA-Synchrotron/visa-k8s-controller-helm
+    icon: https://alba-synchrotron.github.io/visa-k8s-controller-helm/visa-k8s.png
+    keywords:
+    - visa
+    - daas
+    - open-data
+    maintainers:
+    - name: Rodrigo Cabezas Quirós (MIS section @ ALBA Synchrotron)
+    name: visa-k8s-controller
+    sources:
+    - https://github.com/ALBA-Synchrotron/visa-k8s-controller
+    type: application
+    urls:
+    - https://alba-synchrotron.github.io/visa-k8s-controller-helm/visa-k8s-controller-1.0.0.tgz
+    version: 1.0.0
+generated: "2026-10-27T08:54:12.555505201Z"
