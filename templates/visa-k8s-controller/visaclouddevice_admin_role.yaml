@@ -1,4 +1,4 @@
-{{- if and .Values.rbac.create .Values.rbac.createAdminRoles -}}
+{{- if and .Values.controller.enabled .Values.rbac.create .Values.rbac.createAdminRoles -}}
 # This rule is not used by the project visa-k8s-controller itself.
 # It is provided to allow the cluster admin to help manage permissions for users.
 #

@@ -1,3 +1,4 @@
+{{- if .Values.controller.enabled }}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -13,3 +14,22 @@ spec:
       command: ['wget']
       args: ['-q', '-O', '-', 'http://{{ include "visa-k8s-controller.fullname" . }}:{{ .Values.service.healthPort | default .Values.healthProbes.port | default 8081 }}/healthz']
   restartPolicy: Never
+{{- end }}
+{{- if .Values.webCloudProvider.enabled }}
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "visa-k8s-web-cloud-provider.fullname" . }}-test-connection"
+  labels:
+    {{- include "visa-k8s-web-cloud-provider.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['-q', '-O', '-', 'http://{{ include "visa-k8s-web-cloud-provider.fullname" . }}:{{ .Values.webCloudProvider.service.port }}/healthz']
+  restartPolicy: Never
+{{- end }}

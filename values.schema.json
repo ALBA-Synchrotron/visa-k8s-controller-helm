@@ -3,6 +3,225 @@
   "title": "Values",
   "type": "object",
   "properties": {
+    "controller": {
+      "type": "object",
+      "description": "Controller deployment configuration.",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable or disable the VISA Kubernetes Controller deployment."
+        }
+      },
+      "additionalProperties": false
+    },
+    "crds": {
+      "type": "object",
+      "description": "Custom Resource Definitions configuration.",
+      "properties": {
+        "install": {
+          "type": "boolean",
+          "description": "Specifies whether VISA Custom Resource Definitions should be installed (only installed if controller.enabled is true)."
+        }
+      },
+      "additionalProperties": false
+    },
+    "webCloudProvider": {
+      "type": "object",
+      "description": "VISA Web Cloud Provider configuration.",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable or disable the VISA Web Cloud Provider deployment."
+        },
+        "replicaCount": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of web cloud provider replicas."
+        },
+        "image": {
+          "type": "object",
+          "description": "Web cloud provider container image configuration.",
+          "properties": {
+            "repository": {
+              "type": "string"
+            },
+            "pullPolicy": {
+              "type": "string",
+              "enum": ["Always", "IfNotPresent", "Never"]
+            },
+            "tag": {
+              "type": "string"
+            }
+          }
+        },
+        "imagePullSecrets": {
+          "type": "array",
+          "description": "Image pull secrets for the web cloud provider pod."
+        },
+        "nameOverride": {
+          "type": "string"
+        },
+        "fullnameOverride": {
+          "type": "string"
+        },
+        "serviceAccount": {
+          "type": "object",
+          "description": "ServiceAccount configuration for web cloud provider.",
+          "properties": {
+            "create": {
+              "type": "boolean"
+            },
+            "automount": {
+              "type": "boolean"
+            },
+            "annotations": {
+              "type": "object"
+            },
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+        "rbac": {
+          "type": "object",
+          "description": "RBAC configuration for web cloud provider.",
+          "properties": {
+            "create": {
+              "type": "boolean"
+            },
+            "clusterScoped": {
+              "type": "boolean"
+            }
+          }
+        },
+        "config": {
+          "type": "object",
+          "description": "Application configuration for VISA Web Cloud Provider (stored in ConfigMap).",
+          "properties": {
+            "authApiKey": {
+              "type": "string"
+            },
+            "authApiKeyHeaderName": {
+              "type": "string"
+            },
+            "flaskEnv": {
+              "type": "string"
+            },
+            "testingMode": {
+              "type": "string"
+            },
+            "k8sConfigSource": {
+              "type": "string"
+            },
+            "k8sConfigFilePath": {
+              "type": "string"
+            },
+            "k8sNamespace": {
+              "type": "string"
+            },
+            "logLevel": {
+              "type": "string"
+            },
+            "apiHost": {
+              "type": "string"
+            },
+            "apiPort": {
+              "type": "integer"
+            },
+            "port": {
+              "type": "integer"
+            },
+            "autoStartInstancesOnCreation": {
+              "type": "boolean"
+            },
+            "maxRamAllocated": {
+              "type": "number"
+            },
+            "maxInstancesAllocated": {
+              "type": "integer"
+            },
+            "maxCoresAllocated": {
+              "type": "number"
+            },
+            "ignoreSecGroupNotFoundErrors": {
+              "type": "boolean"
+            },
+            "enforceMaxQuotas": {
+              "type": "boolean"
+            },
+            "webConcurrency": {
+              "type": "integer"
+            },
+            "gunicornThreads": {
+              "type": "integer"
+            },
+            "extraConfig": {
+              "type": "object"
+            }
+          }
+        },
+        "existingConfigMap": {
+          "type": "string"
+        },
+        "forceOverwriteConfigMap": {
+          "type": "boolean"
+        },
+        "configMapAnnotations": {
+          "type": "object"
+        },
+        "env": {
+          "type": "array"
+        },
+        "envFrom": {
+          "type": "array"
+        },
+        "podAnnotations": {
+          "type": "object"
+        },
+        "podLabels": {
+          "type": "object"
+        },
+        "podSecurityContext": {
+          "type": "object"
+        },
+        "securityContext": {
+          "type": "object"
+        },
+        "service": {
+          "type": "object"
+        },
+        "ingress": {
+          "type": "object"
+        },
+        "resources": {
+          "type": "object"
+        },
+        "livenessProbe": {
+          "type": "object"
+        },
+        "readinessProbe": {
+          "type": "object"
+        },
+        "podDisruptionBudget": {
+          "type": "object"
+        },
+        "volumes": {
+          "type": "array"
+        },
+        "volumeMounts": {
+          "type": "array"
+        },
+        "nodeSelector": {
+          "type": "object"
+        },
+        "tolerations": {
+          "type": "array"
+        },
+        "affinity": {
+          "type": "object"
+        }
+      }
+    },
     "replicaCount": {
       "type": "integer",
       "minimum": 0,

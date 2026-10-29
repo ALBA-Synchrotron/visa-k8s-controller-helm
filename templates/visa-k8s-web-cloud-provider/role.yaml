@@ -1,0 +1,36 @@
+{{- if and .Values.webCloudProvider.enabled .Values.webCloudProvider.rbac.create -}}
+apiVersion: rbac.authorization.k8s.io/v1
+{{- if .Values.webCloudProvider.rbac.clusterScoped }}
+kind: ClusterRole
+metadata:
+  name: {{ include "visa-k8s-web-cloud-provider.fullname" . }}-role
+  labels:
+    {{- include "visa-k8s-web-cloud-provider.labels" . | nindent 4 }}
+{{- else }}
+kind: Role
+metadata:
+  name: {{ include "visa-k8s-web-cloud-provider.fullname" . }}-role
+  namespace: {{ default .Release.Namespace .Values.webCloudProvider.config.k8sNamespace }}
+  labels:
+    {{- include "visa-k8s-web-cloud-provider.labels" . | nindent 4 }}
+{{- end }}
+rules:
+  - apiGroups:
+      - "cloudprovider.visa.k8s"
+    resources:
+      - visacloudinstances
+      - visacloudinstances/status
+      - visacloudflavours
+      - visacloudimages
+      - visacloudsecuritygroups
+      - visaclouddevices
+      - visacloudsidecarconfigs
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+{{- end }}

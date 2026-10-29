@@ -1,0 +1,46 @@
+{{- if and .Values.webCloudProvider.enabled (not .Values.webCloudProvider.existingConfigMap) -}}
+{{- $configMapName := include "visa-k8s-web-cloud-provider.configMapName" . -}}
+{{- $existingConfigMap := (lookup "v1" "ConfigMap" .Release.Namespace $configMapName) -}}
+{{- $existingApiKey := "" -}}
+{{- if and $existingConfigMap $existingConfigMap.data (hasKey $existingConfigMap.data "AUTH_API_KEY") -}}
+  {{- $existingApiKey = index $existingConfigMap.data "AUTH_API_KEY" -}}
+{{- end -}}
+{{- $apiKey := default (default (randAlphaNum 32) .Values.webCloudProvider.config.authApiKey) $existingApiKey -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $configMapName }}
+  labels:
+    {{- include "visa-k8s-web-cloud-provider.labels" . | nindent 4 }}
+  {{- with .Values.webCloudProvider.configMapAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+data:
+{{- if and $existingConfigMap $existingConfigMap.data (not .Values.webCloudProvider.forceOverwriteConfigMap) }}
+  {{- toYaml $existingConfigMap.data | nindent 2 }}
+{{- else }}
+  AUTH_API_KEY: {{ $apiKey | quote }}
+  AUTH_API_KEY_HEADER_NAME: {{ .Values.webCloudProvider.config.authApiKeyHeaderName | default "X-Auth-Token" | quote }}
+  FLASK_ENV: {{ .Values.webCloudProvider.config.flaskEnv | default "prod" | quote }}
+  TESTING_MODE: {{ .Values.webCloudProvider.config.testingMode | default "unit" | quote }}
+  K8S_CONFIG_SOURCE: {{ .Values.webCloudProvider.config.k8sConfigSource | default "serviceaccount" | quote }}
+  K8S_CONFIG_FILE_PATH: {{ .Values.webCloudProvider.config.k8sConfigFilePath | default "~/.kube/config" | quote }}
+  K8S_NAMESPACE: {{ default .Release.Namespace .Values.webCloudProvider.config.k8sNamespace | quote }}
+  LOG_LEVEL: {{ .Values.webCloudProvider.config.logLevel | default "INFO" | quote }}
+  API_HOST: {{ .Values.webCloudProvider.config.apiHost | default "0.0.0.0" | quote }}
+  API_PORT: {{ .Values.webCloudProvider.config.apiPort | default 8000 | quote }}
+  PORT: {{ default (.Values.webCloudProvider.config.apiPort | default 8000) .Values.webCloudProvider.config.port | quote }}
+  AUTO_START_INSTANCES_ON_CREATION: {{ if (hasKey .Values.webCloudProvider.config "autoStartInstancesOnCreation" | ternary .Values.webCloudProvider.config.autoStartInstancesOnCreation true) }}"True"{{ else }}""{{ end }}
+  MAX_RAM_ALLOCATED: {{ .Values.webCloudProvider.config.maxRamAllocated | default 51200 | quote }}
+  MAX_INSTANCES_ALLOCATED: {{ .Values.webCloudProvider.config.maxInstancesAllocated | default 20 | quote }}
+  MAX_CORES_ALLOCATED: {{ .Values.webCloudProvider.config.maxCoresAllocated | default 15 | quote }}
+  IGNORE_SEC_GROUP_NOT_FOUND_ERRORS: {{ if (hasKey .Values.webCloudProvider.config "ignoreSecGroupNotFoundErrors" | ternary .Values.webCloudProvider.config.ignoreSecGroupNotFoundErrors true) }}"True"{{ else }}""{{ end }}
+  ENFORCE_MAX_QUOTAS: {{ if (hasKey .Values.webCloudProvider.config "enforceMaxQuotas" | ternary .Values.webCloudProvider.config.enforceMaxQuotas true) }}"True"{{ else }}""{{ end }}
+  WEB_CONCURRENCY: {{ .Values.webCloudProvider.config.webConcurrency | default 2 | quote }}
+  GUNICORN_THREADS: {{ .Values.webCloudProvider.config.gunicornThreads | default 4 | quote }}
+  {{- with .Values.webCloudProvider.config.extraConfig }}
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
+{{- end }}
+{{- end }}

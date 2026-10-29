@@ -3,6 +3,10 @@ VISA Kubernetes Controller has been deployed successfully.
 Release:   {{ .Release.Name }}
 Namespace: {{ .Release.Namespace }}
 
+{{- if .Values.controller.enabled }}
+---
+VISA Kubernetes Controller:
+
 1. Check the controller pod status:
    kubectl get pods -n {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "visa-k8s-controller.name" . }},app.kubernetes.io/instance={{ .Release.Name }}"
 
@@ -20,4 +24,23 @@ Namespace: {{ .Release.Namespace }}
    {{- else }}
    curl http://127.0.0.1:{{ .Values.service.port }}/metrics
    {{- end }}
+{{- end }}
+{{- end }}
+
+{{- if .Values.webCloudProvider.enabled }}
+---
+VISA Web Cloud Provider:
+
+1. Check the web cloud provider pod status:
+   kubectl get pods -n {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "visa-k8s-web-cloud-provider.name" . }},app.kubernetes.io/instance={{ .Release.Name }}"
+
+2. View web cloud provider logs:
+   kubectl logs -n {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "visa-k8s-web-cloud-provider.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -f
+
+3. Retrieve the generated Auth API Key from the ConfigMap:
+   kubectl get configmap {{ include "visa-k8s-web-cloud-provider.configMapName" . }} -n {{ .Release.Namespace }} -o jsonpath="{.data.AUTH_API_KEY}"
+
+4. Access the web cloud provider API:
+   kubectl port-forward -n {{ .Release.Namespace }} svc/{{ include "visa-k8s-web-cloud-provider.fullname" . }} {{ .Values.webCloudProvider.service.port }}:{{ .Values.webCloudProvider.service.port }}
+   curl http://127.0.0.1:{{ .Values.webCloudProvider.service.port }}/healthz
 {{- end }}

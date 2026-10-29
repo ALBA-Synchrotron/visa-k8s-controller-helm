@@ -1,0 +1,90 @@
+{{- if .Values.webCloudProvider.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "visa-k8s-web-cloud-provider.fullname" . }}
+  labels:
+    {{- include "visa-k8s-web-cloud-provider.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.webCloudProvider.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "visa-k8s-web-cloud-provider.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        {{- with .Values.webCloudProvider.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "visa-k8s-web-cloud-provider.labels" . | nindent 8 }}
+        {{- with .Values.webCloudProvider.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.webCloudProvider.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "visa-k8s-web-cloud-provider.serviceAccountName" . }}
+      automountServiceAccountToken: {{ .Values.webCloudProvider.serviceAccount.automount }}
+      {{- with .Values.webCloudProvider.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: web-cloud-provider
+          image: "{{ .Values.webCloudProvider.image.repository }}:{{ .Values.webCloudProvider.image.tag | default "latest" }}"
+          imagePullPolicy: {{ .Values.webCloudProvider.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.webCloudProvider.config.apiPort | default 8000 }}
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: {{ include "visa-k8s-web-cloud-provider.configMapName" . }}
+            {{- with .Values.webCloudProvider.envFrom }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          {{- with .Values.webCloudProvider.env }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.webCloudProvider.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.webCloudProvider.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.webCloudProvider.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.webCloudProvider.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.webCloudProvider.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.webCloudProvider.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.webCloudProvider.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.webCloudProvider.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.webCloudProvider.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

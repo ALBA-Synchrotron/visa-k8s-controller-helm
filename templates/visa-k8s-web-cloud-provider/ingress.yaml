@@ -1,0 +1,41 @@
+{{- if and .Values.webCloudProvider.enabled .Values.webCloudProvider.ingress.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "visa-k8s-web-cloud-provider.fullname" . }}
+  labels:
+    {{- include "visa-k8s-web-cloud-provider.labels" . | nindent 4 }}
+  {{- with .Values.webCloudProvider.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .Values.webCloudProvider.ingress.className }}
+  ingressClassName: {{ .Values.webCloudProvider.ingress.className }}
+  {{- end }}
+  {{- if .Values.webCloudProvider.ingress.tls }}
+  tls:
+    {{- range .Values.webCloudProvider.ingress.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
+  rules:
+    {{- range .Values.webCloudProvider.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ .path }}
+            pathType: {{ .pathType }}
+            backend:
+              service:
+                name: {{ include "visa-k8s-web-cloud-provider.fullname" $ }}
+                port:
+                  number: {{ $.Values.webCloudProvider.service.port }}
+          {{- end }}
+    {{- end }}
+{{- end }}

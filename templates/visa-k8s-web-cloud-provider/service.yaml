@@ -1,0 +1,21 @@
+{{- if .Values.webCloudProvider.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "visa-k8s-web-cloud-provider.fullname" . }}
+  labels:
+    {{- include "visa-k8s-web-cloud-provider.labels" . | nindent 4 }}
+  {{- with .Values.webCloudProvider.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ .Values.webCloudProvider.service.type }}
+  ports:
+    - port: {{ .Values.webCloudProvider.service.port }}
+      targetPort: {{ .Values.webCloudProvider.service.targetPort | default "http" }}
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "visa-k8s-web-cloud-provider.selectorLabels" . | nindent 4 }}
+{{- end }}
