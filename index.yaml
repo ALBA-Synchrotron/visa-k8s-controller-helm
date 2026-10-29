@@ -3,9 +3,9 @@ entries:
   visa-k8s-controller:
   - apiVersion: v2
     appVersion: 1.0.4
-    created: "2026-10-27T09:05:42.125278372Z"
+    created: "2026-10-29T10:47:17.875546109Z"
     description: A Helm chart for deploying VISA's kubernetes cloud provider controller
-    digest: 7ade64a3a99c596bd52f474f26da14966706b44caef870751db857e3562fc690
+    digest: 3acad2c892cd6d2676ec6584ac65ddc8eef21e73cd126fe348a085762c53233b
     home: https://github.com/ALBA-Synchrotron/visa-k8s-controller-helm
     icon: https://alba-synchrotron.github.io/visa-k8s-controller-helm/visa-k8s.png
     keywords:
@@ -19,11 +19,11 @@ entries:
     - https://github.com/ALBA-Synchrotron/visa-k8s-controller
     type: application
     urls:
-    - https://alba-synchrotron.github.io/visa-k8s-controller-helm/visa-k8s-controller-1.0.4.tgz
+    - https://alba-synchrotron.github.io/visa-k8s-helm/visa-k8s-controller-1.0.4.tgz
     version: 1.0.4
   - apiVersion: v2
     appVersion: 1.0.3
-    created: "2026-10-27T09:05:42.124371575Z"
+    created: "2026-10-29T10:47:17.874006989Z"
     description: A Helm chart for deploying VISA's kubernetes cloud provider controller
     digest: 5848a3b077176eac3abf6d01f57f7a43645cc574f35265d13c74765e87a4eafa
     home: https://github.com/ALBA-Synchrotron/visa-k8s-controller-helm
@@ -39,11 +39,11 @@ entries:
     - https://github.com/ALBA-Synchrotron/visa-k8s-controller
     type: application
     urls:
-    - https://alba-synchrotron.github.io/visa-k8s-controller-helm/visa-k8s-controller-1.0.3.tgz
+    - https://alba-synchrotron.github.io/visa-k8s-helm/visa-k8s-controller-1.0.3.tgz
     version: 1.0.3
   - apiVersion: v2
     appVersion: 1.0.2
-    created: "2026-10-27T09:05:42.121801562Z"
+    created: "2026-10-29T10:47:17.871438748Z"
     description: A Helm chart for deploying VISA's kubernetes cloud provider controller
     digest: 4eac64f03cd46cdbc1a06a9afaaa0d3a6384e5a8cfcd6c7a7860ced76820ead8
     home: https://github.com/ALBA-Synchrotron/visa-k8s-controller-helm
@@ -59,11 +59,11 @@ entries:
     - https://github.com/ALBA-Synchrotron/visa-k8s-controller
     type: application
     urls:
-    - https://alba-synchrotron.github.io/visa-k8s-controller-helm/visa-k8s-controller-1.0.2.tgz
+    - https://alba-synchrotron.github.io/visa-k8s-helm/visa-k8s-controller-1.0.2.tgz
     version: 1.0.2
   - apiVersion: v2
     appVersion: 1.0.1
-    created: "2026-10-27T09:05:42.119279691Z"
+    created: "2026-10-29T10:47:17.867526978Z"
     description: A Helm chart for deploying VISA's kubernetes cloud provider controller
     digest: cdb9df99b4fff1660412cecc4ef18c3ef81b79c9622da84941e9eaf999ba1968
     home: https://github.com/ALBA-Synchrotron/visa-k8s-controller-helm
@@ -79,11 +79,11 @@ entries:
     - https://github.com/ALBA-Synchrotron/visa-k8s-controller
     type: application
     urls:
-    - https://alba-synchrotron.github.io/visa-k8s-controller-helm/visa-k8s-controller-1.0.1.tgz
+    - https://alba-synchrotron.github.io/visa-k8s-helm/visa-k8s-controller-1.0.1.tgz
     version: 1.0.1
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-10-27T09:05:42.116928334Z"
+    created: "2026-10-29T10:47:17.865446486Z"
     description: A Helm chart for deploying VISA's kubernetes cloud provider controller
     digest: 071b4ab6611371f15a6402ebec927cf274f195bbb369163740914f306d21b24c
     home: https://github.com/ALBA-Synchrotron/visa-k8s-controller-helm
@@ -99,6 +99,6 @@ entries:
     - https://github.com/ALBA-Synchrotron/visa-k8s-controller
     type: application
     urls:
-    - https://alba-synchrotron.github.io/visa-k8s-controller-helm/visa-k8s-controller-1.0.0.tgz
+    - https://alba-synchrotron.github.io/visa-k8s-helm/visa-k8s-controller-1.0.0.tgz
     version: 1.0.0
-generated: "2026-10-27T09:05:42.113163496Z"
+generated: "2026-10-29T10:47:17.862831286Z"
