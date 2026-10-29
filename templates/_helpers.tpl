@@ -6,6 +6,13 @@ Expand the name of the chart.
 {{- end }}
 
 {{/*
+Create the namespace for the controller deployment.
+*/}}
+{{- define "visa-k8s-controller.namespace" -}}
+{{- default .Release.Namespace .Values.controller.namespace -}}
+{{- end }}
+
+{{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
@@ -66,6 +73,13 @@ Expand the name of the web cloud provider.
 */}}
 {{- define "visa-k8s-web-cloud-provider.name" -}}
 {{- default "visa-k8s-web-cloud-provider" .Values.webCloudProvider.nameOverride | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{/*
+Create the namespace for the web cloud provider deployment.
+*/}}
+{{- define "visa-k8s-web-cloud-provider.namespace" -}}
+{{- default .Release.Namespace .Values.webCloudProvider.namespace -}}
 {{- end }}
 
 {{/*

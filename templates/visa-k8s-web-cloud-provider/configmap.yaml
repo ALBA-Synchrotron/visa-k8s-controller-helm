@@ -1,6 +1,7 @@
 {{- if and .Values.webCloudProvider.enabled (not .Values.webCloudProvider.existingConfigMap) -}}
 {{- $configMapName := include "visa-k8s-web-cloud-provider.configMapName" . -}}
-{{- $existingConfigMap := (lookup "v1" "ConfigMap" .Release.Namespace $configMapName) -}}
+{{- $configMapNamespace := include "visa-k8s-web-cloud-provider.namespace" . -}}
+{{- $existingConfigMap := (lookup "v1" "ConfigMap" $configMapNamespace $configMapName) -}}
 {{- $existingApiKey := "" -}}
 {{- if and $existingConfigMap $existingConfigMap.data (hasKey $existingConfigMap.data "AUTH_API_KEY") -}}
   {{- $existingApiKey = index $existingConfigMap.data "AUTH_API_KEY" -}}
@@ -10,6 +11,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ $configMapName }}
+  namespace: {{ $configMapNamespace }}
   labels:
     {{- include "visa-k8s-web-cloud-provider.labels" . | nindent 4 }}
   {{- with .Values.webCloudProvider.configMapAnnotations }}
@@ -26,7 +28,7 @@ data:
   TESTING_MODE: {{ .Values.webCloudProvider.config.testingMode | default "unit" | quote }}
   K8S_CONFIG_SOURCE: {{ .Values.webCloudProvider.config.k8sConfigSource | default "serviceaccount" | quote }}
   K8S_CONFIG_FILE_PATH: {{ .Values.webCloudProvider.config.k8sConfigFilePath | default "~/.kube/config" | quote }}
-  K8S_NAMESPACE: {{ default .Release.Namespace .Values.webCloudProvider.config.k8sNamespace | quote }}
+  K8S_NAMESPACE: {{ default $configMapNamespace .Values.webCloudProvider.config.k8sNamespace | quote }}
   LOG_LEVEL: {{ .Values.webCloudProvider.config.logLevel | default "INFO" | quote }}
   API_HOST: {{ .Values.webCloudProvider.config.apiHost | default "0.0.0.0" | quote }}
   API_PORT: {{ .Values.webCloudProvider.config.apiPort | default 8000 | quote }}

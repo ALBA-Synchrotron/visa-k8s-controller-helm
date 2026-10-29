@@ -1,6 +1,8 @@
 controller:
   # Enable or disable the VISA Kubernetes Controller deployment
   enabled: true
+  # Kubernetes namespace where the controller resources are deployed (defaults to Release namespace if empty)
+  namespace: ""
 
 crds:
   # Specifies whether VISA Custom Resource Definitions should be installed (only installed if controller.enabled is true)
@@ -37,6 +39,7 @@ rbac:
 
 # Controller scope configuration
 # When set, limits the operator watch to specific namespace(s) (comma-separated).
+# Note: This is separate from controller.namespace (where the controller itself is deployed).
 # If empty, the controller watches all namespaces across the cluster.
 operatorScopeNamespace: ""
 
@@ -161,6 +164,8 @@ affinity: {}
 webCloudProvider:
   # Enable or disable the VISA Web Cloud Provider deployment
   enabled: false
+  # Kubernetes namespace where the web cloud provider resources are deployed (defaults to Release namespace if empty)
+  namespace: ""
 
   replicaCount: 1
 
@@ -211,8 +216,9 @@ webCloudProvider:
     # Path to kubeconfig file when using 'kubeconfig' mode
     k8sConfigFilePath: "~/.kube/config"
 
-    # Kubernetes namespace where VISA CRD instances and resources reside.
-    # If empty, defaults to the release namespace.
+    # Kubernetes namespace where VISA CRD instances and resources reside and are managed by the provider.
+    # Note: This is separate from webCloudProvider.namespace (where the provider service itself is deployed).
+    # If empty, defaults to webCloudProvider.namespace or the release namespace.
     k8sNamespace: ""
 
     # Python logging level ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL')

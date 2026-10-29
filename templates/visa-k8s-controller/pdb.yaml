@@ -3,6 +3,7 @@ apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: {{ include "visa-k8s-controller.fullname" . }}
+  namespace: {{ include "visa-k8s-controller.namespace" . }}
   labels:
     {{- include "visa-k8s-controller.labels" . | nindent 4 }}
 spec:

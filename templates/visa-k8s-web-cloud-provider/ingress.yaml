@@ -3,6 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ include "visa-k8s-web-cloud-provider.fullname" . }}
+  namespace: {{ include "visa-k8s-web-cloud-provider.namespace" . }}
   labels:
     {{- include "visa-k8s-web-cloud-provider.labels" . | nindent 4 }}
   {{- with .Values.webCloudProvider.ingress.annotations }}

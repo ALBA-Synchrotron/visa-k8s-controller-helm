@@ -10,6 +10,10 @@
         "enabled": {
           "type": "boolean",
           "description": "Enable or disable the VISA Kubernetes Controller deployment."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Kubernetes namespace where the controller resources are deployed (defaults to Release namespace if empty)."
         }
       },
       "additionalProperties": false
@@ -32,6 +36,10 @@
         "enabled": {
           "type": "boolean",
           "description": "Enable or disable the VISA Web Cloud Provider deployment."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Kubernetes namespace where the web cloud provider resources are deployed (defaults to Release namespace if empty)."
         },
         "replicaCount": {
           "type": "integer",

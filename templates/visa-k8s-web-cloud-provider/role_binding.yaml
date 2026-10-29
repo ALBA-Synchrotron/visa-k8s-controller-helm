@@ -13,12 +13,12 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: {{ include "visa-k8s-web-cloud-provider.serviceAccountName" . }}
-    namespace: {{ .Release.Namespace }}
+    namespace: {{ include "visa-k8s-web-cloud-provider.namespace" . }}
 {{- else }}
 kind: RoleBinding
 metadata:
   name: {{ include "visa-k8s-web-cloud-provider.fullname" . }}-rolebinding
-  namespace: {{ default .Release.Namespace .Values.webCloudProvider.config.k8sNamespace }}
+  namespace: {{ default (include "visa-k8s-web-cloud-provider.namespace" .) .Values.webCloudProvider.config.k8sNamespace }}
   labels:
     {{- include "visa-k8s-web-cloud-provider.labels" . | nindent 4 }}
 roleRef:
@@ -28,6 +28,6 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: {{ include "visa-k8s-web-cloud-provider.serviceAccountName" . }}
-    namespace: {{ .Release.Namespace }}
+    namespace: {{ include "visa-k8s-web-cloud-provider.namespace" . }}
 {{- end }}
 {{- end }}

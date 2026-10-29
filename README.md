@@ -67,6 +67,7 @@ kubectl get configmap visa-k8s-web-cloud-provider-config -n visa-system -o jsonp
 | Parameter | Description | Default |
 | --- | --- | --- |
 | `controller.enabled` | Enable or disable the controller deployment | `true` |
+| `controller.namespace` | Kubernetes namespace for controller deployment resources (defaults to release namespace if empty) | `""` |
 | `crds.install` | Install VISA Custom Resource Definitions (only if `controller.enabled=true`) | `true` |
 | `replicaCount` | Number of controller replicas | `1` |
 | `image.repository` | Controller container image repository | `misalbasynchrotron/visa-k8s-controller` |
@@ -126,6 +127,7 @@ kubectl get configmap visa-k8s-web-cloud-provider-config -n visa-system -o jsonp
 | Parameter | Description | Default |
 | --- | --- | --- |
 | `webCloudProvider.enabled` | Enable or disable the Web Cloud Provider deployment | `true` |
+| `webCloudProvider.namespace` | Kubernetes namespace for web cloud provider deployment resources (defaults to release namespace if empty) | `""` |
 | `webCloudProvider.replicaCount` | Number of web cloud provider replicas | `1` |
 | `webCloudProvider.image.repository` | Web cloud provider container image repository | `misalbasynchrotron/visa-k8s-web-cloud-provider` |
 | `webCloudProvider.image.pullPolicy` | Image pull policy | `IfNotPresent` |
@@ -145,7 +147,7 @@ kubectl get configmap visa-k8s-web-cloud-provider-config -n visa-system -o jsonp
 | `webCloudProvider.config.testingMode` | Testing profile mode (`unit`, `integration`) | `"unit"` |
 | `webCloudProvider.config.k8sConfigSource` | Kubernetes client config mode (`serviceaccount`, `kubeconfig`) | `"serviceaccount"` |
 | `webCloudProvider.config.k8sConfigFilePath` | Path to kubeconfig file when using `kubeconfig` mode | `"~/.kube/config"` |
-| `webCloudProvider.config.k8sNamespace` | Target Kubernetes namespace where VISA CRD instances reside (defaults to release namespace) | `""` |
+| `webCloudProvider.config.k8sNamespace` | Target Kubernetes namespace where VISA CRD instances and resources reside (defaults to web cloud provider namespace) | `""` |
 | `webCloudProvider.config.logLevel` | Python logging level (`DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`) | `"INFO"` |
 | `webCloudProvider.config.apiHost` | Host address to bind HTTP server | `"0.0.0.0"` |
 | `webCloudProvider.config.apiPort` | Port number to bind HTTP server | `8000` |

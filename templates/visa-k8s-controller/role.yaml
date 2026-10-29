@@ -69,6 +69,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: {{ include "visa-k8s-controller.fullname" . }}-leader-election-role
+  namespace: {{ include "visa-k8s-controller.namespace" . }}
   labels:
     {{- include "visa-k8s-controller.labels" . | nindent 4 }}
 rules:
