@@ -19,7 +19,7 @@ The controller and web cloud provider can be deployed together or independently 
 To install both the controller and the web cloud provider with the release name `visa-k8s`:
 
 ```bash
-helm repo add alba-synchrotron https://alba-synchrotron.github.io/visa-k8s-controller-helm
+helm repo add alba-synchrotron https://alba-synchrotron.github.io/visa-k8s-helm
 helm repo update
 helm install visa-k8s alba-synchrotron/visa-k8s-controller --namespace visa-system --create-namespace
 ```
