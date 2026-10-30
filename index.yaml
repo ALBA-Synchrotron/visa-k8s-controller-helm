@@ -3,9 +3,9 @@ entries:
   visa-k8s-provider:
   - apiVersion: v2
     appVersion: 1.0.6
-    created: "2026-10-30T08:34:17.726784392Z"
+    created: "2026-10-30T11:40:55.828409652Z"
     description: A Helm chart for deploying VISA's kubernetes cloud provider controller
-    digest: fa060863b1528f9e6472b2c86c5d14bda40949d18f25fe12ac436fa6f99d8ccc
+    digest: 82227ad69aaadb3e73760ff80345233b2a76d7d7479ce7d9b6360d359f6dbf99
     home: https://github.com/ALBA-Synchrotron/visa-k8s-helm
     icon: https://alba-synchrotron.github.io/visa-k8s-helm/visa-k8s.png
     keywords:
@@ -23,4 +23,4 @@ entries:
     urls:
     - https://alba-synchrotron.github.io/visa-k8s-helm/visa-k8s-provider-1.0.6.tgz
     version: 1.0.6
-generated: "2026-10-30T08:34:17.710394949Z"
+generated: "2026-10-30T11:40:55.826710116Z"
